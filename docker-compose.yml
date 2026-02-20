@@ -1,0 +1,48 @@
+﻿version: '3.9'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - useraccess-network  # ← Agregar red
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - useraccess-network  # ← Agregar red
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.1
+    container_name: filebeat
+    user: root
+    volumes:
+      - C:/Users/Luis Palacio/source/repos/UserAccessManagement.Api/logs:/app/logs
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro  # ← Para logs de contenedores
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # ← Para metadata de Docker
+    
+    networks:
+      - useraccess-network  # ← Agregar red
+
+networks:  # ← Definir la red
+  useraccess-network:
+    driver: bridge
+
+volumes:
+  esdata:
+    driver: local

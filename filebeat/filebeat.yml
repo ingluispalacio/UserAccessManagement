@@ -1,0 +1,43 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /app/logs/*.json
+  json:
+    keys_under_root: true
+    overwrite_keys: true
+    add_error_key: true
+    expand_keys: true
+    message_key: message
+  multiline:
+    pattern: '^{'
+    negate: true
+    match: after
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - decode_json_fields:
+      fields: ["message"]
+      process_array: false
+      max_depth: 2
+      target: ""
+      overwrite_keys: true
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  index: "useraccess-logs-%{+yyyy.MM.dd}"
+
+setup.template.name: "useraccess"
+setup.template.pattern: "useraccess-*"
+setup.template.enabled: true
+setup.template.overwrite: false
+
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /usr/share/filebeat/logs
+  name: filebeat
+  keepfiles: 7

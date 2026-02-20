@@ -1,0 +1,111 @@
+# Visual Studio / .NET
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.pidb
+*.userprefs
+*.ide.*
+
+# Build outputs
+bin/
+obj/
+**/bin/
+**/obj/
+publish/
+artifacts/
+
+# NuGet
+*.nupkg
+packages/
+.project.lock.json
+
+# Runtime & tooling
+*.runtimeconfig.json
+*.dll
+*.exe
+
+# Test results / coverage
+TestResults/
+coverage/
+coverage.opencover.xml
+coverage.*.xml
+*.coverage
+*.trx
+*.testsettings
+*.vsmdi
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# dotnet tools / local tool manifests
+.tool/
+tools/
+
+# User secrets / local configuration
+secrets.json
+*.Secret.json
+*.Local.settings.json
+.env
+*.env
+
+# Entity Framework / local DB / DB backups
+*.mdf
+*.ldf
+*.sqlite
+*.db
+*.db-journal
+*.bak
+
+# Logs
+/logs/
+**/logs/
+*.log
+*.json
+
+# Serilog file output (project writes ../logs/useraccess.json)
+../logs/
+**/useraccess*.json
+
+# Docker related
+docker-compose.override.yml
+docker-compose.*.yml
+.docker/
+**/.docker/
+Dockerfile.*
+docker-*.log
+
+# ELK / Elasticsearch data (if created locally)
+elasticsearch/
+elasticsearch-data/
+kibana/
+kibana-data/
+
+# Filebeat / local beat logs
+filebeat/logs/
+**/filebeat/logs/
+
+# Generated files
+obj/**/*.generated.*
+*.g.cs
+*.g.i.cs
+
+# Package manager folders
+node_modules/
+jspm_packages/
+
+# Visual Studio Code workspace
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Misc
+*.log.*
+*.swp
+*.swo
