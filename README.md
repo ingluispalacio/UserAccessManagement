@@ -1,5 +1,6 @@
 ﻿Here's the improved `README.md` file that incorporates the new content while maintaining the existing structure and information:
-
+
+
 # UserAccessManagement
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/)
@@ -21,7 +22,8 @@ Aplicación organizada en capas (Clean Architecture):
 - API — Web API (ASP.NET Core), middlewares, rutas y configuración.
 
 Diagrama de capas (ASCII):
-
+
+
 Domain
   ↑
   │  (interfaces)
@@ -31,7 +33,8 @@ Application  <-- Handlers (CQRS), DTOs, Services
 Infrastructure  <-- EF Core, Repositories, Security, Logging
   ↑
   │
-API (ASP.NET Core)  <-- Controllers, Middleware, Swagger
+API (ASP.NET Core)  <-- Controllers, Middleware, Swagger
+
 
 ## 🧰 Stack de tecnologías
 
@@ -90,20 +93,23 @@ Explicación rápida por carpeta:
 Se asume que hay un `docker-compose.yml` con servicios: `api`, `db` (SQL Server), `elasticsearch`, `kibana`, `filebeat`.
 
 Ejemplo de comandos (desde la raíz del repositorio):
-
+
+
 # Build y levantar servicios
 docker-compose build --pull
 docker-compose up -d
 
 # Ver logs del API
-docker-compose logs -f api
+docker-compose logs -f api
+
 
 Notas importantes:
 - Configurar `appsettings.json`/variables de entorno para la cadena de conexión (`DefaultConnection`) y `Jwt` settings.
 - Serilog está configurado para escribir un archivo JSON en `../logs/useraccess.json` — Filebeat está configurado para leer `/app/logs/*.json` (ver `filebeat.yml` más abajo).
 
 Filebeat (extracto relevante) — ya incluido en la solución:
-
+
+
 filebeat.inputs:
   - type: log
     enabled: true
@@ -146,19 +152,22 @@ logging.to_files: true
 logging.files:
   path: /usr/share/filebeat/logs
   name: filebeat
-  keepfiles: 7
+  keepfiles: 7
+
 
 Este pipeline permite que los logs JSON escritos por Serilog sean enviados a Elasticsearch y visualizados en Kibana.
 
 ## 🧪 Ejecutar pruebas
 
 Desde la raíz del proyecto de pruebas o solución:
-
+
+
 # Ejecutar todas las pruebas unitarias
 dotnet test
 
 # Ejecutar una colección específica y ver cobertura (coverlet collector agregado)
-dotnet test --collect:"XPlat Code Coverage"
+dotnet test --collect:"XPlat Code Coverage"
+
 
 Buenas prácticas en las pruebas del proyecto:
 - Uso de Moq para simulación de `IUserRepository`, `IUnitOfWork`, `IPasswordHasher`, etc.
@@ -204,11 +213,13 @@ Endpoints (ejemplos):
 Autenticación: endpoints protegidos requieren encabezado `Authorization: Bearer <token>`.
 
 Ejemplo `curl` con JWT:
-
+
+
 curl -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name":"John","lastname":"Doe","email":"john@example.com","password":"P@ss"}' \
-  https://localhost:5001/api/v1/users
+  https://localhost:5001/api/v1/users
+
 
 ## 🤝 Contribuir
 
@@ -229,5 +240,6 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para má
 Si quieres, puedo:
 - Generar un `docker-compose.yml` base para levantar API + SQL Server + ELK + Filebeat.
 - Añadir un `CONTRIBUTING.md` y `.editorconfig` con las reglas del proyecto.
-- Crear ejemplos de Postman / OpenAPI más detallados.
-Esta versión del `README.md` mantiene la estructura original al tiempo que integra perfectamente el nuevo contenido, garantizando claridad y coherencia en todo el documento.
+- Crear ejemplos de Postman / OpenAPI más detallados.
+
+This version of README.md maintains the original structure while seamlessly integrating new content, ensuring clarity and consistency throughout the document.
